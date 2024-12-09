@@ -1,4 +1,7 @@
-body {
-    height: 100%;
-    background-image: linear-gradient(#BEDCFF, #86BDFD 10%, #2E5F97);
-  }
+.bg-day {
+  background-image: "";
+}
+
+.bg-night{
+
+}
