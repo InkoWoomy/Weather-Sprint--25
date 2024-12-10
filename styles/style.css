@@ -1,15 +1,73 @@
 .bg-day {
-  background-image: url("../images/PaldeaDay.jpg");
-  background-size: cover;
-  height: 100%;
+  /* background-image: url("../images/PaldeaDay.jpg");
+  background-position-x: center;
+  height: 100%; */
+  background-color: #000000;
 }
 
-.bg-night{
+/* .bg-night{
   background-image: url("../images/PaldeaNight.jpg");
   background-size: cover;
   height: 100%;
+} */
+
+
+.hudHeadersBG
+{
+  background-color: #1B7E94;
+  color: #000000;
+  font-size: 40px;
 }
 
-.container-fluid{
+.hudDetailsBG
+{
+  background-color: #E6E6E6;
+}
+
+.background
+{
+  background-color: #82828280;
+}
+
+
+.container-shrink
+{
   padding-inline: 10%;
+}
+
+
+/*Current Weather (Left Side)*/
+#currentTemperature
+{
+  font-size: 70px;
+  font-weight: 400;
+  color: #1B7E94;
+}
+
+#currentWeather
+{
+  font-size: 45px;
+  font-weight: bold;
+}
+
+#currentHigh
+{
+  font-size: 60px;
+  font-weight: 400;
+  color: #1B7E94;
+}
+
+#currentLow
+{
+  font-size: 60px;
+  font-weight: 400;
+  color: #1B7E9450;
+}
+
+
+.forecastText
+{
+  font-size: 40px;
+  font-weight: 400;
+  color: #1B7E94;
 }

@@ -3,31 +3,33 @@ import { APIKEY } from './enviroment.js';
 
 //This is a built-in API function that allows us to get the current location of the user
 
+
 //navigator returns the geolocation object
 //getCurrentPosition() returns the current position of the user
 
 navigator.geolocation.getCurrentPosition( success , errorFunc );
+const locationPromise = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${currentCity},${currentCountry}&appid=${apiKey}`);
 
 // (success , errorFunc)
 // Think of this as an if/else statement. If the user asppects it is successful, if not it's an error.
 
 //Example of a geolocation object
-{
-    coords: {
-        latitude: 37.7749;
-        longitude: -122.4194;
-    }
-}
+// {
+//     coords: {
+//         latitude: 37.7749;
+//         longitude: -122.4194;
+//     }
+// }
 
 function success(position)
 {
     console.log(position);
     console.log("Our latitude: " + position.coords.latitude);
     console.log("Our longitude: " + position.coords.longitude);
-    console.log("We know where you are!");
 }
 
 success();
+
 
 function errorFunc (error){ 
     console.log(error.message);
