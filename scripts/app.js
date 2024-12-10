@@ -1,4 +1,5 @@
-import { APIKEY } from './scripts/environment.js'; 
+import { APIKEY } from './enviroment.js';
+
 
 //This is a built-in API function that allows us to get the current location of the user
 
@@ -21,8 +22,9 @@ navigator.geolocation.getCurrentPosition( success , errorFunc );
 function success(position)
 {
     console.log(position);
-    console.log("Latitude: " + position.coords.latitude);
-    console.log("Longitude: " + position.coords.longitude);
+    console.log("Our latitude: " + position.coords.latitude);
+    console.log("Our longitude: " + position.coords.longitude);
+    console.log("We know where you are!");
 }
 
 success();
