@@ -8,7 +8,7 @@ import { APIKEY } from './enviroment.js';
 //getCurrentPosition() returns the current position of the user
 
 navigator.geolocation.getCurrentPosition( success , errorFunc );
-const locationPromise = await fetch(`http://api.openweathermap.org/data/2.5/forecast?q=${currentCity},${currentCountry}&appid=${apiKey}`);
+// `http://api.openweathermap.org/data/2.5/forecast?q=${currentCity},${currentCountry}&appid=${apiKey}`
 
 // (success , errorFunc)
 // Think of this as an if/else statement. If the user asppects it is successful, if not it's an error.
