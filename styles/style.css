@@ -1,7 +1,15 @@
 .bg-day {
-  background-image: "";
+  background-image: url("../images/PaldeaDay.jpg");
+  background-size: cover;
+  height: 100%;
 }
 
 .bg-night{
+  background-image: url("../images/PaldeaNight.jpg");
+  background-size: cover;
+  height: 100%;
+}
 
+.container-fluid{
+  padding-inline: 10%;
 }
