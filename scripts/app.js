@@ -5,11 +5,14 @@ import { APIKEY } from './enviroment.js';
 const city = document.getElementById("city");
 const searchButton = document.getElementById("searchButton");
 const userInputCity = document.getElementById("userInputCity");
+const currentTemperature = document.getElementById("currentTemperature");
 
 
 //Obtain Weather data from API
 
 //Test Data 
+let currentDay = [];
+let fiveDay = [];
 let searchedCity = "";
 let lat = 0;
 let lon = 0;
@@ -26,8 +29,6 @@ function getLocation()
             console.log(data);
             lat = (data[0].lat);
             lon = (data[0].lon);
-            console.log(`Latitude: ${lat}`);
-            console.log(`Longitude ${lon}`);
         })
 }
 
@@ -38,6 +39,7 @@ function getCurrentDay(){
     })
     .then((currentDay) => {
         console.log(currentDay);
+        return currentDay;
     });
 }
 
@@ -54,10 +56,13 @@ function get5Day(){
 
 //getWeather will get data from getLocation after the user searches, so that we can find the weather data.
 function getWeather(){
-    getLocation(searchedCity);
+    getLocation()
     getCurrentDay();
-    get5Day();
+    city.innerText = [0].name;
+    currentTemperature.innerText = currentDay.main.temp;
     
+
+
 }
 
 
@@ -66,6 +71,5 @@ searchButton.addEventListener('click', function()
 {
     searchedCity = userInputCity.value.toLowerCase();
     getWeather();
-    city.innerText = searchedCity;
 })
 
