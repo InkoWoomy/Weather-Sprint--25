@@ -1,8 +1,7 @@
 .bg-day {
-  /* background-image: url("../images/PaldeaDay.jpg");
-  background-position-x: center;
-  height: 100%; */
-  background-color: #000000;
+  background-image: url("../images/PaldeaDay.jpg");
+  background-size: cover;
+  height: 100%;
 }
 
 /* .bg-night{
