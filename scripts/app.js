@@ -58,7 +58,9 @@ async function get5Day(){
 
 function getCurrentWeatherIcon()
 {
-    
+    const iconID = currentData.weather[0].icon;
+    console.log(currentData.weather[0].icon);
+    currentIcon.innerHTML = `<img src="./images/currentImages/${iconID}.png">`
 }
 
 
