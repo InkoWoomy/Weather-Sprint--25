@@ -10,14 +10,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./styles/style.css">
   </head>
-  <body class="bg-day">
+  <body class="bg-day" id="daybg">
     
     <div class="container-fluid container-shrink d-flex mt-5">
       <!--Main-->
-      <div class="container-fluid container-shrink background py-5 rounded-5">
+      <div class="container-fluid container-shrink background py-5 rounded-5 align-bottom">
         <!--Search Bar-->
         <div class="container d-flex">
-          <div class="col-9 d-flex justify-content-center">
+          <div class="col-9 d-flex justify-content-center ps-4">
             <input type="cityinput" class="form-control rounded-4 p-0 ps-4" id="userInputCity" placeholder="Enter Your Location" style="font-size: 40px;">
           </div>
           <div class="col-3 d-flex justify-content-center">
@@ -28,14 +28,14 @@
         <!--Current Day Forecast-->
         <div class="container-fluid mt-5">
           <div class="row">
-            <div class="col-4 px-3">
-              <div class="hudDetailsBG rounded-4 pb-3">
+            <div class="col-4 pe-4">
+              <div class="hudDetailsBG rounded-4 pb-3 mt-auto">
                 <div class="hudHeadersBG rounded-4">
                   <h1 class="p-2 py-4 text-center fw-normal">Temperature</h1>
                 </div>
                 <div class="container d-flex justify-content-center">     
                   <div class="col text-center">                    
-                    <h1 class="fw-normal px-1" id="city">City</h1>
+                    <h1 class="fw-normal px-1" id="city" style="font-size: 30px;">City</h1>
                   </div>
                   <div class="col-3 justify-content-end">                    
                     <img type="button" id="favoritesButton" src="./images/FavoriteInactive.png" alt="currentFavoriteButton" style="width: 50%">
@@ -43,7 +43,7 @@
                 </div>
                 <h2 class="text-center" id="currentTemperature">00°</h2>
                 <div class="text-center p-0" id="currentIcon">
-                  <img src="./images/currentImages/01d.png">
+                  <img src="./images/currentImages/01d.png" style="width: 40%">
                 </div>
                 <h2 class="text-center" id="currentWeather">Clear</h2>
                 <div class="container container-shrink d-flex">
@@ -124,37 +124,37 @@
                 </div>
               </div>
 
-              <div class="container-fluid p-0 d-flex mt-4">
+              <div class="row d-flex mt-4 p-0">
 
                 <!--Recent Searches-->
                 <div class="col-6 pe-2">
-                  <div class="hudDetailsBG rounded-4 h-100">
-                    <div class="hudHeadersBG rounded-4">
-                      <h1 class="p-2 px-4 fw-normal">
-                        Recent Searches
-                      </h1>
+                  <div class="hudHeadersBG rounded-4">
+                    <h1 class="p-2 px-4 mb-0 fw-normal">
+                      Recent Searches
+                    </h1>
+                  </div>
+                  <div class="hudDetailsBG rounded-4 pb-3 pe-3" style="overflow-x: hidden; overflow-y: scroll;">
+                    <div style="height:10vb;">
+                      <div class="row text-center" id="historyList"></div>
                     </div>
                   </div>
                 </div>
 
                 <!--Saved Favorites-->
                 <div class="col-6 ps-2">
-                  <div class="hudDetailsBG rounded-4 h-100">
-                    <div class="hudHeadersBG rounded-4">
-                      <h1 class="p-2 px-4 fw-normal">
-                        Saved
-                      </h1>
-                    </div>
-                    <div class="p-2">
-                      <h2 id="favoritesList"></h2>
+                  <div class="hudHeadersBG rounded-4">
+                    <h1 class="p-2 px-4 mb-0 fw-normal">
+                      Saved
+                    </h1>
+                  </div>
+                  <div class="hudDetailsBG rounded-4 pb-3 pe-3" style="overflow-x: hidden; overflow-y: scroll;">
+                    <div style="height:10vb;">
+                      <div class="row text-center" id="favoritesList"></div>
                     </div>
                   </div>
                 </div>
-
-
               </div>
             </div>
-
           </div>
         </div>
       </div>

@@ -2,8 +2,6 @@
 import { APIKEY } from './enviroment.js';
 import { getFromFavorites, saveToFavorites, removeFromFavorites } from './localstorage.js';
 
-
-
 //Call variables for data implementation (Current Day)
 const city = document.getElementById("city");
 const searchButton = document.getElementById("searchButton");
@@ -14,7 +12,8 @@ const currentHigh = document.getElementById("currentHigh");
 const currentLow = document.getElementById("currentLow");
 const currentIcon = document.getElementById("currentIcon");
 const favoritesList = document.getElementById("favoritesList");
-
+const historyList = document.getElementById("historyList");
+const daybg = document.getElementById("daybg");
 //Call variables for data implementation (Forecast)
 
 const forecastNum1 = document.getElementById("forecastNum1");
@@ -30,16 +29,20 @@ const forecastIcon4 = document.getElementById("forecastIcon4");
 const forecastIcon5 = document.getElementById("forecastIcon5");
 const forecastIcons = [forecastIcon1, forecastIcon2, forecastIcon3, forecastIcon4, forecastIcon5];
 
-//REMOVE BEFORE SUBMISSION!!!!
-localStorage.clear();
+
 
 //Variables 
 let locationData = [];
 let currentData = [];
 let forecastData = [];
+let history = [];
 let searchedCity = "";
 let lat = 0;
 let lon = 0;
+
+showFavoritesList();
+
+// localStorage.clear();
 
 //getLocation will populate data for a specific location when the user searches for it
 async function getLocation()
@@ -66,7 +69,16 @@ async function get5Day(){
 function getCurrentWeatherIcon()
 {
     const iconID = currentData.weather[0].icon;
-    currentIcon.innerHTML = `<img src="./images/currentImages/${iconID}.png">`
+    currentIcon.innerHTML = `<img src="./images/currentImages/${iconID}.png" style="width: 40%">`
+
+    if (currentData.weather[0].icon.includes("n"))
+    {
+        daybg.classList.remove("bg-day")
+        daybg.classList.add("bg-night")
+    } else {
+        daybg.classList.remove("bg-night")
+        daybg.classList.add("bg-day")
+    }
 }
 
 function getForecastWeatherIcons()
@@ -117,42 +129,98 @@ searchButton.addEventListener('click', function()
     searchedCity = userInputCity.value;
     console.log(`NEW DATA FOR: ${searchedCity}`)
     getWeather();
+    addToHistoryList();
 })
 
-
-async function addToFavoritesFromSearch()
+async function addToHistoryList()
 {
-    console.log(`SAVING ${searchedCity} FOR FAVORITES!`)
-    saveToFavorites(searchedCity);
-    console.log(searchedCity);
+    for (let i = 0; i < history.length; i++)
+    {
+        if (history[i] == searchedCity)
+        {
+            console.log("THAT'S A REPEAT!!! WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO!!!")
+            history.splice(searchedCity, 1);
+        }
+    }
+    historyList.innerHTML = "";
+    history.push(searchedCity);
+
+    history.map(historyItems => {
+        console.log(`HISTORY: ${historyItems}`);
+
+        let h2 = document.createElement ('h2');
+        h2.type = 'button';
+        h2.className = "btn col-9 text-center"
+        h2.style = "font-size: 30px;"
+        h2.innerText = historyItems;
+        
+        let favorite = document.createElement('button');
+        favorite.type = 'button';
+        favorite.className = "btn col-3"
+        favorite.innerHTML = `<img src="./images/FavoriteInactive.png">`;
+        
+        favorite.addEventListener('click', function()
+        {
+            console.log("Adding favorites")
+            addToFavorites();
+        })
+        historyList.appendChild(h2);
+        historyList.appendChild(favorite);
+    })
+}
+
+async function showFavoritesList()
+{
     let cityList = await getFromFavorites();
+    favoritesList.innerHTML = "";
 
     cityList.map(cities => {
         console.log(`CITIES ITEM: ${cities}`);
 
         let h2 = document.createElement ('h2');
+        h2.type = 'button';
+        h2.className = "btn col-9 text-center"
+        h2.style = "font-size: 30px;"
         h2.innerText = cities;
-
+        
         let unfavorite = document.createElement('button');
         unfavorite.type = 'button';
-        unfavorite.className = "btn"
+        unfavorite.className = "btn col-3"
         unfavorite.innerHTML = `<img src="./images/FavoriteActive.png">`;
+        
+        h2.addEventListener('click', function()
+        {
+            searchedCity = h2.innerText;
+            console.log(`GETTING DATA FOR: ${searchedCity}`)
+            getWeather();   
+        })
 
         unfavorite.addEventListener('click', function()
         {
+            console.log("Removing from favorites")
             removeFromFavorites(cities);
             h2.remove();
+            unfavorite.remove();
         })
 
-        h2.appendChild(unfavorite);
-
         favoritesList.appendChild(h2);
+        favoritesList.appendChild(unfavorite);
     })
+}
 
-
+function addToFavorites()
+{
+    console.log(`SAVING ${searchedCity} FOR FAVORITES!`)
+    if (searchedCity == "")
+    {
+        return null;
+    }
+    saveToFavorites(searchedCity);
+    console.log(searchedCity);
+    showFavoritesList();
 }
 
 favoritesButton.addEventListener('click', function()
 {
-    addToFavoritesFromSearch();
+    addToFavorites();
 })

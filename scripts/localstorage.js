@@ -27,7 +27,7 @@ function removeFromFavorites(city)
     let favoritesData = getFromFavorites();
     let cityIndex = favoritesData.indexOf(city);
     favoritesData.splice(cityIndex, 1);
-    favoritesData.setItem('Cities', JSON.stringify(favoritesData));
+    localStorage.setItem('Cities', JSON.stringify(favoritesData));
 }
 
 

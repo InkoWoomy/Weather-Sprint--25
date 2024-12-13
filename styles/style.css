@@ -4,11 +4,11 @@
   height: 100%;
 }
 
-/* .bg-night{
+.bg-night{
   background-image: url("../images/PaldeaNight.jpg");
   background-size: cover;
   height: 100%;
-} */
+}
 
 
 .hudHeadersBG
@@ -34,6 +34,13 @@
   padding-inline: 10%;
 }
 
+
+.align-bottom {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%; /* Ensure it fills the parent height */
+}
 
 /*Current Weather (Left Side)*/
 #currentTemperature
