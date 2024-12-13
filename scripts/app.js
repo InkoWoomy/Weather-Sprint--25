@@ -1,5 +1,8 @@
 //Importing the API key from enviroment.js, so we can have enviroment.js (and the API key as a result) ignored by git.
 import { APIKEY } from './enviroment.js';
+import { getFromFavorites, saveToFavorites } from './localstorage.js';
+
+
 
 //Call variables for data implementation (Current Day)
 const city = document.getElementById("city");
@@ -24,6 +27,7 @@ const forecastIcon2 = document.getElementById("forecastIcon2");
 const forecastIcon3 = document.getElementById("forecastIcon3");
 const forecastIcon4 = document.getElementById("forecastIcon4");
 const forecastIcon5 = document.getElementById("forecastIcon5");
+const forecastIcons = [forecastIcon1, forecastIcon2, forecastIcon3, forecastIcon4, forecastIcon5];
 
 
 //Variables 
@@ -59,21 +63,29 @@ async function get5Day(){
 function getCurrentWeatherIcon()
 {
     const iconID = currentData.weather[0].icon;
-    console.log(currentData.weather[0].icon);
     currentIcon.innerHTML = `<img src="./images/currentImages/${iconID}.png">`
+}
+
+function getForecastWeatherIcons()
+{
+    for (let i = 0; i < 5; i++)
+    {
+        const iconID = forecastData.list[i].weather[0].icon;
+        forecastIcons[i].innerHTML = `<img src="./images/forecastImages/${iconID}.png" style="width: 80%">`
+    }
 }
 
 
 //getWeather will get data from getLocation after the user searches, so that we can find the weather data.
 async function getWeather(){
-    console.log("get location data");
+    console.log("Get location data");
     locationData = await getLocation();
     console.log(locationData);
     city.innerText = locationData[0].name
     lat = locationData[0].lat;
     lon = locationData[0].lon;
 
-    console.log("get currrent day data");
+    console.log("Get currrent day data");
     currentData = await getCurrentDay();
     console.log(currentData);
     currentWeather.innerText = currentData.weather[0].main
@@ -81,7 +93,7 @@ async function getWeather(){
     currentHigh.innerText = `${Math.ceil(currentData.main.temp_max)}°`;
     currentLow.innerText = `${Math.ceil(currentData.main.temp_min)}°`;
 
-    console.log("get five day forecast data");
+    console.log("Get five day forecast data");
     forecastData = await get5Day();
     console.log(forecastData);
     forecastNum1.innerText = `${Math.ceil(forecastData.list[0].main.temp)}`
@@ -90,7 +102,9 @@ async function getWeather(){
     forecastNum4.innerText = `${Math.ceil(forecastData.list[3].main.temp)}`
     forecastNum5.innerText = `${Math.ceil(forecastData.list[4].main.temp)}`
 
-    getCurrentWeatherIcon()
+    getCurrentWeatherIcon();
+    getForecastWeatherIcons();
+    console.log(`DATA GET FOR "${searchedCity}" IS COMPLETE!`)
 }
 
 
@@ -102,3 +116,7 @@ searchButton.addEventListener('click', function()
     getWeather();
 })
 
+favoritesButton.addEventListener('click', function()
+{
+    saveToFavorites(searchedCity);
+})
