@@ -27,6 +27,12 @@ const forecastIcon2 = document.getElementById("forecastIcon2");
 const forecastIcon3 = document.getElementById("forecastIcon3");
 const forecastIcon4 = document.getElementById("forecastIcon4");
 const forecastIcon5 = document.getElementById("forecastIcon5");
+
+const day1 = document.getElementById("day1");
+const day2 = document.getElementById("day2");
+const day3 = document.getElementById("day3");
+const day4 = document.getElementById("day4");
+const day5 = document.getElementById("day5");
 const forecastIcons = [forecastIcon1, forecastIcon2, forecastIcon3, forecastIcon4, forecastIcon5];
 
 
@@ -42,6 +48,15 @@ let lon = 0;
 
 showFavoritesList();
 
+//Time of Day innerText
+let currentDate = new Date();
+day1.innerText = new Date(currentDate.getTime() + 86400000 * 1).toLocaleDateString('en-US', { weekday: 'short' });
+day2.innerText = new Date(currentDate.getTime() + 86400000 * 2).toLocaleDateString('en-US', { weekday: 'short' });
+day3.innerText = new Date(currentDate.getTime() + 86400000 * 3).toLocaleDateString('en-US', { weekday: 'short' });
+day4.innerText = new Date(currentDate.getTime() + 86400000 * 4).toLocaleDateString('en-US', { weekday: 'short' });
+day5.innerText = new Date(currentDate.getTime() + 86400000 * 5).toLocaleDateString('en-US', { weekday: 'short' });
+
+// For testing purposes; this will clear your localstorage if enabled
 // localStorage.clear();
 
 //getLocation will populate data for a specific location when the user searches for it
@@ -66,6 +81,7 @@ async function get5Day(){
     return data;
 }
 
+//Gets the current icon for the current weather of the day. Changes the background of the image depending on the time of day 
 function getCurrentWeatherIcon()
 {
     const iconID = currentData.weather[0].icon;
@@ -81,6 +97,7 @@ function getCurrentWeatherIcon()
     }
 }
 
+// This gets each icon for the forecast days
 function getForecastWeatherIcons()
 {
     for (let i = 0; i < 5; i++)
@@ -111,11 +128,13 @@ async function getWeather(){
     console.log("Get five day forecast data");
     forecastData = await get5Day();
     console.log(forecastData);
+
     forecastNum1.innerText = `${Math.ceil(forecastData.list[0].main.temp)}`
     forecastNum2.innerText = `${Math.ceil(forecastData.list[1].main.temp)}`
     forecastNum3.innerText = `${Math.ceil(forecastData.list[2].main.temp)}`
     forecastNum4.innerText = `${Math.ceil(forecastData.list[3].main.temp)}`
     forecastNum5.innerText = `${Math.ceil(forecastData.list[4].main.temp)}`
+
 
     getCurrentWeatherIcon();
     getForecastWeatherIcons();
@@ -123,7 +142,7 @@ async function getWeather(){
 }
 
 
-
+//When the search button is pressed, it will get the weather for that city and add your search to the history list
 searchButton.addEventListener('click', function()
 {
     searchedCity = userInputCity.value;
@@ -132,14 +151,14 @@ searchButton.addEventListener('click', function()
     addToHistoryList();
 })
 
+//Checks if the searched item is a repeat. If it's not a repeat, it will add the item into the search list. You can click on the favorite button of the search list item to add it to your favorites, as well as a clicking the text of the city to display its information again. History does not save in-between sessions.
 async function addToHistoryList()
 {
     for (let i = 0; i < history.length; i++)
     {
         if (history[i] == searchedCity)
         {
-            console.log("THAT'S A REPEAT!!! WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO WEE WOO!!!")
-            history.splice(searchedCity, 1);
+            return null;
         }
     }
     historyList.innerHTML = "";
@@ -159,6 +178,13 @@ async function addToHistoryList()
         favorite.className = "btn col-3"
         favorite.innerHTML = `<img src="./images/FavoriteInactive.png">`;
         
+        h2.addEventListener('click', function()
+        {
+            searchedCity = h2.innerText;
+            console.log(`GETTING DATA FOR: ${searchedCity}`)
+            getWeather();   
+        })
+
         favorite.addEventListener('click', function()
         {
             console.log("Adding favorites")
@@ -169,6 +195,7 @@ async function addToHistoryList()
     })
 }
 
+//Updates the favorites list when a new item is added to it, either from the history list or from the main weather tab. Has a button to remove it from the list, as well as a clickable icon to display its information again. Favorites bar saves in-between sessions.
 async function showFavoritesList()
 {
     let cityList = await getFromFavorites();
@@ -208,6 +235,7 @@ async function showFavoritesList()
     })
 }
 
+//These two add an item to the favorites list as long as it's not a repeat
 function addToFavorites()
 {
     console.log(`SAVING ${searchedCity} FOR FAVORITES!`)
