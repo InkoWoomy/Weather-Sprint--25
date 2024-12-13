@@ -1,6 +1,6 @@
 //Importing the API key from enviroment.js, so we can have enviroment.js (and the API key as a result) ignored by git.
 import { APIKEY } from './enviroment.js';
-import { getFromFavorites, saveToFavorites } from './localstorage.js';
+import { getFromFavorites, saveToFavorites, removeFromFavorites } from './localstorage.js';
 
 
 
@@ -13,6 +13,7 @@ const currentWeather = document.getElementById("currentWeather");
 const currentHigh = document.getElementById("currentHigh");
 const currentLow = document.getElementById("currentLow");
 const currentIcon = document.getElementById("currentIcon");
+const favoritesList = document.getElementById("favoritesList");
 
 //Call variables for data implementation (Forecast)
 
@@ -29,6 +30,8 @@ const forecastIcon4 = document.getElementById("forecastIcon4");
 const forecastIcon5 = document.getElementById("forecastIcon5");
 const forecastIcons = [forecastIcon1, forecastIcon2, forecastIcon3, forecastIcon4, forecastIcon5];
 
+//REMOVE BEFORE SUBMISSION!!!!
+localStorage.clear();
 
 //Variables 
 let locationData = [];
@@ -116,7 +119,40 @@ searchButton.addEventListener('click', function()
     getWeather();
 })
 
+
+async function addToFavoritesFromSearch()
+{
+    console.log(`SAVING ${searchedCity} FOR FAVORITES!`)
+    saveToFavorites(searchedCity);
+    console.log(searchedCity);
+    let cityList = await getFromFavorites();
+
+    cityList.map(cities => {
+        console.log(`CITIES ITEM: ${cities}`);
+
+        let h2 = document.createElement ('h2');
+        h2.innerText = cities;
+
+        let unfavorite = document.createElement('button');
+        unfavorite.type = 'button';
+        unfavorite.className = "btn"
+        unfavorite.innerHTML = `<img src="./images/FavoriteActive.png">`;
+
+        unfavorite.addEventListener('click', function()
+        {
+            removeFromFavorites(cities);
+            h2.remove();
+        })
+
+        h2.appendChild(unfavorite);
+
+        favoritesList.appendChild(h2);
+    })
+
+
+}
+
 favoritesButton.addEventListener('click', function()
 {
-    saveToFavorites(searchedCity);
+    addToFavoritesFromSearch();
 })
